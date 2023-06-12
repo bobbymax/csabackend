@@ -40,4 +40,9 @@ class Ticket extends Model
     {
         return $this->morphOne(Task::class, 'taskable');
     }
+
+    public function uploads(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Upload::class, 'uploadable');
+    }
 }

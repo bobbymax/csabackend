@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class Consonance extends Model
 {
     use HasFactory;
 
-    protected $guarded = [''];
-
-    public function staff(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function staff(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function tasks(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function consonanceable(): \Illuminate\Database\Eloquent\Relations\MorphTo
     {
-        return $this->belongsToMany(Task::class, 'company_task');
+        return $this->morphTo();
     }
 
     public function uploads(): \Illuminate\Database\Eloquent\Relations\MorphMany

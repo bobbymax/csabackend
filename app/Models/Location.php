@@ -25,4 +25,9 @@ class Location extends Model
     {
         return $this->hasMany(Ticket::class);
     }
+
+    public function upload(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
+        return $this->morphOne(Upload::class, 'uploadable');
+    }
 }

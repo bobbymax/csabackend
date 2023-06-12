@@ -83,4 +83,24 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Task::class, 'task_user');
     }
+
+    public function roomBookingRequests(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    public function meetingsHandled(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(BookingDetail::class);
+    }
+
+    public function uploads(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Upload::class, 'uploadable');
+    }
+
+    public function uploaded(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Upload::class);
+    }
 }

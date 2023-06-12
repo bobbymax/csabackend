@@ -40,4 +40,9 @@ class Department extends Model
     {
         return $this->hasMany(IncidentCategory::class);
     }
+
+    public function inventoryCategories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(InventoryCategory::class, 'department_inventory_category');
+    }
 }

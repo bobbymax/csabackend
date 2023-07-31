@@ -11,6 +11,11 @@ class StockCategory extends Model
 
     protected $guarded = [''];
 
+    public function image(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
+        return $this->morphOne(Upload::class, 'uploadable');
+    }
+
     public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(InventoryCategory::class, 'inventory_category_id');

@@ -11,6 +11,11 @@ class Application extends Model
 
     protected $guarded = [''];
 
+    public function modules(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Module::class);
+    }
+
     public function groups(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphToMany(Group::class, 'groupable');

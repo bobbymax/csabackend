@@ -13,9 +13,4 @@ class Upload extends Model
     {
         return $this->morphTo();
     }
-
-    public function staff(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 }

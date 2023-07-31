@@ -59,6 +59,16 @@ class User extends Authenticatable
         return $this->belongsTo(Department::class, 'department_id');
     }
 
+    public function documents(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Document::class);
+    }
+
+    public function drafts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Draft::class);
+    }
+
     public function company(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Company::class, 'company_id');
@@ -84,6 +94,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Task::class, 'task_user');
     }
 
+    public function todos(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Todo::class);
+    }
+
     public function roomBookingRequests(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Booking::class);
@@ -99,8 +114,8 @@ class User extends Authenticatable
         return $this->morphMany(Upload::class, 'uploadable');
     }
 
-    public function uploaded(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function restocks(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Upload::class);
+        return $this->hasMany(Restock::class);
     }
 }

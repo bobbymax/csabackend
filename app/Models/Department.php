@@ -11,6 +11,11 @@ class Department extends Model
 
     protected $guarded = [''];
 
+    public function approvals(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Approval::class);
+    }
+
     public function type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(DepartmentType::class, 'department_type_id');
@@ -44,5 +49,15 @@ class Department extends Model
     public function inventoryCategories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(InventoryCategory::class, 'department_inventory_category');
+    }
+
+    public function documents(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Document::class);
+    }
+
+    public function drafts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Draft::class);
     }
 }

@@ -28,4 +28,9 @@ class Task extends Model
     {
         return $this->belongsToMany(Company::class, 'company_task');
     }
+
+    public function todos(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Todo::class);
+    }
 }

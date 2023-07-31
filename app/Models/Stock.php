@@ -40,4 +40,9 @@ class Stock extends Model
     {
         return $this->morphToMany(Tag::class, 'tagable');
     }
+
+    public function restocks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Restock::class);
+    }
 }

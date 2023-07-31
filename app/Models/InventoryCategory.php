@@ -16,7 +16,7 @@ class InventoryCategory extends Model
         return $this->hasMany(StockCategory::class);
     }
 
-    public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function departments(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Department::class, 'department_inventory_category');
     }

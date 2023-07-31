@@ -11,6 +11,11 @@ class Group extends Model
 
     protected $guarded = [''];
 
+    public function approvals(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Approval::class);
+    }
+
     public function staff(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphedByMany(User::class, 'groupable');
@@ -29,5 +34,10 @@ class Group extends Model
     public function canAccess(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(AccessControl::class);
+    }
+
+    public function settings(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphedByMany(Setting::class, 'groupable');
     }
 }

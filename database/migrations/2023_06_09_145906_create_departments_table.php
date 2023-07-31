@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('department_type_id')->references('id')->on('department_types')->onDelete('cascade');
             $table->string('name');
             $table->string('code')->unique();
+            $table->bigInteger('parentId')->default(0);
             $table->bigInteger('controller')->default(0);
             $table->bigInteger('hod')->default(0);
             $table->timestamps();

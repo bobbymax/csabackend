@@ -13,7 +13,7 @@ class Stock extends Model
 
     public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Brand::class, 'brand_id')->where('brand_id', '>', 0);
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 
     public function type(): \Illuminate\Database\Eloquent\Relations\BelongsTo

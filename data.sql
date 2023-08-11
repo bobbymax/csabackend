@@ -100,7 +100,7 @@ CREATE TABLE `applications` (
 
 LOCK TABLES `applications` WRITE;
 /*!40000 ALTER TABLE `applications` DISABLE KEYS */;
-INSERT INTO `applications` VALUES (1,'Administration','ADM','/administration','settings','administration application section',0,'2023-06-20 14:24:34','2023-06-20 14:24:34'),(2,'Inventory','INV','/inventory','store','inventory management system',0,'2023-06-20 14:25:11','2023-06-20 14:26:21'),(4,'Helpdesk','HDK','/helpdesk','headphones','Helpdesk Application',0,'2023-07-28 09:38:25','2023-07-28 10:09:09'),(5,'Fleet Management','FMG','/fleets','train','Fleet Management App',0,'2023-07-30 19:48:17','2023-07-30 19:48:17'),(6,'Operations','OPS','/operations','home','Operations Application',0,'2023-07-30 19:51:17','2023-07-30 19:51:17'),(7,'Logistics','LGS','/logistics','share','Logistics Section',0,'2023-07-30 19:54:03','2023-07-30 19:54:54'),(8,'Vendors','VEND','/vendors','store','Vendor management section',0,'2023-07-30 23:48:18','2023-07-30 23:49:04');
+INSERT INTO `applications` VALUES (1,'Administration','ADM','/administration','settings','administration application section',0,'2023-06-20 14:24:34','2023-06-20 14:24:34'),(2,'Inventory','INV','/inventory','store','inventory management system',0,'2023-06-20 14:25:11','2023-06-20 14:26:21'),(4,'Helpdesk','HDK','/helpdesk','headphones','Helpdesk Application',0,'2023-07-28 09:38:25','2023-07-28 10:09:09'),(5,'Fleet Management','FMG','/fleets','train','Fleet Management App',0,'2023-07-30 19:48:17','2023-07-30 19:48:17'),(6,'Operations','OPS','/operations','home','Operations Application',0,'2023-07-30 19:51:17','2023-07-30 19:51:17'),(7,'Logistics','LGS','/logistics','share','Logistics Section',0,'2023-07-30 19:54:03','2023-07-30 19:54:54');
 /*!40000 ALTER TABLE `applications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,7 +154,7 @@ CREATE TABLE `availabilities` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `availabilities_label_unique` (`label`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,7 +163,7 @@ CREATE TABLE `availabilities` (
 
 LOCK TABLES `availabilities` WRITE;
 /*!40000 ALTER TABLE `availabilities` DISABLE KEYS */;
-INSERT INTO `availabilities` VALUES (1,'Available','available','2023-06-20 12:51:38','2023-06-20 12:51:38');
+INSERT INTO `availabilities` VALUES (1,'Available','available','2023-06-20 12:51:38','2023-06-20 12:51:38'),(2,'Training','training','2023-08-03 00:07:29','2023-08-03 00:07:29'),(3,'Leave','leave','2023-08-03 00:07:41','2023-08-03 00:07:41'),(4,'Sabatical','sabatical','2023-08-03 00:07:50','2023-08-03 00:07:50'),(5,'Secondment','secondment','2023-08-03 00:08:00','2023-08-03 00:08:00'),(6,'Assignment','assignment','2023-08-03 00:08:11','2023-08-03 00:08:11');
 /*!40000 ALTER TABLE `availabilities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -263,7 +263,7 @@ CREATE TABLE `brands` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -272,7 +272,7 @@ CREATE TABLE `brands` (
 
 LOCK TABLES `brands` WRITE;
 /*!40000 ALTER TABLE `brands` DISABLE KEYS */;
-INSERT INTO `brands` VALUES (1,'DELL','2023-07-01 13:59:53','2023-07-01 13:59:53'),(2,'HP','2023-07-01 13:59:59','2023-07-01 13:59:59');
+INSERT INTO `brands` VALUES (1,'DELL','2023-07-01 13:59:53','2023-07-01 13:59:53'),(2,'HP','2023-07-01 13:59:59','2023-07-01 13:59:59'),(4,'SHARP','2023-08-08 12:37:16','2023-08-08 12:37:23');
 /*!40000 ALTER TABLE `brands` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -302,7 +302,7 @@ CREATE TABLE `companies` (
   UNIQUE KEY `companies_email_unique` (`email`),
   UNIQUE KEY `companies_mobile_unique` (`mobile`),
   UNIQUE KEY `companies_payment_code_unique` (`payment_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -311,7 +311,7 @@ CREATE TABLE `companies` (
 
 LOCK TABLES `companies` WRITE;
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
-INSERT INTO `companies` VALUES (1,'Nigerian Content Development and Monitoring Board','NCDMB',NULL,NULL,NULL,NULL,NULL,'owner','2023-06-20 12:51:38','2023-06-20 12:51:38');
+INSERT INTO `companies` VALUES (1,'Nigerian Content Development and Monitoring Board','NCDMB',NULL,NULL,'info@ncdmb.gov.ng',NULL,'88000','owner','2023-06-20 12:51:38','2023-08-03 11:54:32'),(2,'Vascon Limited','VSLMT',NULL,NULL,'from@from.com',NULL,NULL,'vendor','2023-08-03 12:07:30','2023-08-03 12:07:53');
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -432,7 +432,7 @@ CREATE TABLE `department_inventory_category` (
 
 LOCK TABLES `department_inventory_category` WRITE;
 /*!40000 ALTER TABLE `department_inventory_category` DISABLE KEYS */;
-INSERT INTO `department_inventory_category` VALUES (5,1);
+INSERT INTO `department_inventory_category` VALUES (1,4),(1,5),(5,5),(1,6),(3,6),(1,7),(5,7),(3,4);
 /*!40000 ALTER TABLE `department_inventory_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,7 +485,7 @@ CREATE TABLE `departments` (
   UNIQUE KEY `departments_code_unique` (`code`),
   KEY `departments_department_type_id_foreign` (`department_type_id`),
   CONSTRAINT `departments_department_type_id_foreign` FOREIGN KEY (`department_type_id`) REFERENCES `department_types` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -494,7 +494,7 @@ CREATE TABLE `departments` (
 
 LOCK TABLES `departments` WRITE;
 /*!40000 ALTER TABLE `departments` DISABLE KEYS */;
-INSERT INTO `departments` VALUES (1,1,'Administration','SAD',0,0,0,'2023-06-20 12:51:38','2023-06-20 12:51:38'),(2,1,'Corporate Services','CSD',0,0,0,'2023-06-20 12:54:43','2023-06-20 12:54:43'),(3,2,'Information Communications Technology','ICT',2,0,0,'2023-06-20 12:55:48','2023-06-20 12:55:48'),(5,2,'Facility and Logistics','FLD',2,0,0,'2023-07-01 13:36:05','2023-07-01 13:36:05');
+INSERT INTO `departments` VALUES (1,1,'Administration','SAD',0,0,0,'2023-06-20 12:51:38','2023-06-20 12:51:38'),(2,1,'Corporate Services','CSD',0,0,0,'2023-06-20 12:54:43','2023-06-20 12:54:43'),(3,2,'Information Communications Technology','ICT',2,0,0,'2023-06-20 12:55:48','2023-06-20 12:55:48'),(5,2,'Facility and Logistics','FLD',2,0,0,'2023-07-01 13:36:05','2023-07-01 13:36:05'),(6,1,'Executive Secretary\'s Office','ESO',0,0,0,'2023-08-02 20:00:22','2023-08-02 20:00:34');
 /*!40000 ALTER TABLE `departments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -732,7 +732,7 @@ CREATE TABLE `grade_levels` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `grade_levels_key_unique` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -741,7 +741,7 @@ CREATE TABLE `grade_levels` (
 
 LOCK TABLES `grade_levels` WRITE;
 /*!40000 ALTER TABLE `grade_levels` DISABLE KEYS */;
-INSERT INTO `grade_levels` VALUES (1,'Technical Administrator','TAR','2023-06-20 12:51:38','2023-06-20 12:51:38'),(2,'Supervisor','SS3','2023-06-20 13:16:27','2023-06-20 13:16:27');
+INSERT INTO `grade_levels` VALUES (1,'Technical Administrator','TAR','2023-06-20 12:51:38','2023-06-20 12:51:38'),(2,'Supervisor','SS3','2023-06-20 13:16:27','2023-06-20 13:16:27'),(3,'Officer III','SS7','2023-08-02 23:44:40','2023-08-02 23:44:40'),(4,'Officer II','SS6','2023-08-02 23:45:39','2023-08-02 23:45:39'),(5,'Officer I','SS5','2023-08-02 23:45:50','2023-08-02 23:45:50'),(6,'Senior Officer','SS4','2023-08-02 23:46:03','2023-08-02 23:46:03'),(7,'Senior Supervisor','SS2','2023-08-02 23:47:21','2023-08-02 23:47:21'),(8,'Chief Supervisor','SS1','2023-08-02 23:47:35','2023-08-02 23:47:35'),(9,'Assistant Deputy Manager','M6','2023-08-02 23:47:57','2023-08-02 23:47:57'),(10,'Deputy Manager','M5','2023-08-02 23:48:09','2023-08-02 23:48:09'),(11,'Manager','M4','2023-08-02 23:48:20','2023-08-02 23:48:20'),(12,'General Manager','M3','2023-08-02 23:48:36','2023-08-02 23:48:36'),(13,'Director','M2','2023-08-02 23:48:46','2023-08-02 23:48:46'),(14,'Executive Secretary','M1','2023-08-02 23:48:57','2023-08-02 23:48:57');
 /*!40000 ALTER TABLE `grade_levels` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -870,7 +870,7 @@ CREATE TABLE `inventory_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -879,7 +879,7 @@ CREATE TABLE `inventory_categories` (
 
 LOCK TABLES `inventory_categories` WRITE;
 /*!40000 ALTER TABLE `inventory_categories` DISABLE KEYS */;
-INSERT INTO `inventory_categories` VALUES (1,'Confectionary',NULL,'2023-07-01 13:36:49','2023-07-01 13:37:23');
+INSERT INTO `inventory_categories` VALUES (4,'Confectionary',NULL,'2023-08-07 13:32:36','2023-08-07 13:32:36'),(5,'Stationary',NULL,'2023-08-07 13:33:44','2023-08-07 13:33:44'),(6,'Hardware',NULL,'2023-08-07 13:35:09','2023-08-07 13:35:09'),(7,'Fleet',NULL,'2023-08-08 01:01:00','2023-08-08 01:01:00');
 /*!40000 ALTER TABLE `inventory_categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -946,7 +946,6 @@ CREATE TABLE `item_features` (
 
 LOCK TABLES `item_features` WRITE;
 /*!40000 ALTER TABLE `item_features` DISABLE KEYS */;
-INSERT INTO `item_features` VALUES (2,1,'blue',657,'2022-09-06 00:00:00',0,0,'comprehensive','2023-07-05 09:17:47','2023-07-05 09:17:47');
 /*!40000 ALTER TABLE `item_features` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -990,7 +989,6 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` VALUES (1,1,1,1,NULL,'TOYOTA CAMRY',200,'2023-09-06 00:00:00','2023-09-06 00:00:00',NULL,0.00,1,'available','2023-07-05 08:52:40','2023-07-05 08:54:52');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1029,7 +1027,6 @@ CREATE TABLE `itineraries` (
 
 LOCK TABLES `itineraries` WRITE;
 /*!40000 ALTER TABLE `itineraries` DISABLE KEYS */;
-INSERT INTO `itineraries` VALUES (1,1,1,1,'This is what is available again',NULL,0,0,'pending','2023-07-17 09:21:14','2023-07-17 09:21:50');
 /*!40000 ALTER TABLE `itineraries` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1049,7 +1046,7 @@ CREATE TABLE `locations` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `locations_label_unique` (`label`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1058,7 +1055,7 @@ CREATE TABLE `locations` (
 
 LOCK TABLES `locations` WRITE;
 /*!40000 ALTER TABLE `locations` DISABLE KEYS */;
-INSERT INTO `locations` VALUES (1,'Yenagoa, Bayelsa','yenagoa-bayelsa',1,'2023-06-20 12:51:38','2023-06-20 12:51:38');
+INSERT INTO `locations` VALUES (1,'Yenagoa, Bayelsa','yenagoa-bayelsa',1,'2023-06-20 12:51:38','2023-06-20 12:51:38'),(2,'Abuja Liaison Office','abuja-liaison-office',1,'2023-08-02 17:09:37','2023-08-02 17:09:37');
 /*!40000 ALTER TABLE `locations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1145,7 +1142,7 @@ CREATE TABLE `modules` (
   UNIQUE KEY `modules_path_unique` (`path`),
   KEY `modules_application_id_foreign` (`application_id`),
   CONSTRAINT `modules_application_id_foreign` FOREIGN KEY (`application_id`) REFERENCES `applications` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1154,7 +1151,7 @@ CREATE TABLE `modules` (
 
 LOCK TABLES `modules` WRITE;
 /*!40000 ALTER TABLE `modules` DISABLE KEYS */;
-INSERT INTO `modules` VALUES (1,1,'Configuration','CONF','/administration/configuration','engineering','inventory management system',0,0,'2023-06-21 12:45:09','2023-07-30 23:10:24'),(3,1,'Applications','APPS','/administration/applications','apps','Applications description here',0,0,'2023-07-30 23:03:24','2023-07-30 23:03:24'),(4,1,'Modules','MODS','/administration/modules','layers','The Modules Description here',0,0,'2023-07-30 23:04:39','2023-07-30 23:04:39'),(5,1,'Groups','GRPS','/administration/groups','groups','Groups description here',0,0,'2023-07-30 23:05:14','2023-07-30 23:05:14'),(6,1,'Locations','LOCS','/administration/locations','location_on','Locations description here',0,0,'2023-07-30 23:06:10','2023-07-30 23:10:44'),(7,1,'Staff','STF','/administration/staff','people','STaff Section here',0,0,'2023-07-30 23:45:18','2023-07-30 23:45:18'),(8,2,'Requisitions','RQS','/inventory/requisitions','view_kanban','Requisitions side',0,0,'2023-07-31 00:12:22','2023-07-31 00:12:22'),(9,4,'Tickets','TCKS','/helpdesk/tickets','bug_report','Tickets section here',0,0,'2023-07-31 00:13:43','2023-07-31 00:13:43');
+INSERT INTO `modules` VALUES (1,1,'Configuration','CONF','/administration/configuration','engineering','inventory management system',0,0,'2023-06-21 12:45:09','2023-07-30 23:10:24'),(3,1,'Applications','APPS','/administration/applications','apps','Applications description here',0,0,'2023-07-30 23:03:24','2023-07-30 23:03:24'),(4,1,'Modules','MODS','/administration/modules','layers','The Modules Description here',0,0,'2023-07-30 23:04:39','2023-07-30 23:04:39'),(5,1,'Groups','GRPS','/administration/groups','groups','Groups description here',0,0,'2023-07-30 23:05:14','2023-07-30 23:05:14'),(6,1,'Locations','LOCS','/administration/locations','location_on','Locations description here',0,0,'2023-07-30 23:06:10','2023-07-30 23:10:44'),(7,1,'Staff','STF','/administration/staff','people','STaff Section here',0,0,'2023-07-30 23:45:18','2023-07-30 23:45:18'),(8,2,'Requisitions','RQS','/inventory/requisitions','view_kanban','Requisitions side',0,0,'2023-07-31 00:12:22','2023-07-31 00:12:22'),(9,4,'Tickets','TCKS','/helpdesk/tickets','bug_report','Tickets section here',0,0,'2023-07-31 00:13:43','2023-07-31 00:13:43'),(10,1,'Floors','FLR','/administration/floors','apartment','Floors Section',0,0,'2023-08-02 17:10:57','2023-08-02 17:13:16'),(11,1,'Staff Types','STY','/administration/staff-types','badge','Staff Types desc',0,0,'2023-08-02 17:28:30','2023-08-02 17:28:30'),(12,1,'Department Types','DTY','/administration/department-types','chat','DEPTTTT',0,0,'2023-08-02 17:29:51','2023-08-02 17:29:51'),(13,1,'Departments','DPMT','/administration/departments','computer','Departments description',0,0,'2023-08-02 19:58:21','2023-08-02 19:58:21'),(14,1,'Availabilities','AVI','/administration/availabilities','badge','Available Section',0,0,'2023-08-02 20:04:51','2023-08-02 20:04:51'),(15,1,'Grade Levels','GRDL','/administration/grade-levels','school','Grade Levels Section',0,0,'2023-08-02 20:05:52','2023-08-02 20:05:52'),(16,1,'Settings','STTS','/administration/settings','settings','Settings Section',0,0,'2023-08-02 20:06:18','2023-08-02 20:06:18'),(17,1,'Vendors','VEND','/administration/vendors','apartment','Vendors Management section',0,0,'2023-08-03 00:09:35','2023-08-03 00:27:11'),(18,2,'Inventory Categories','INCA','/inventory/parent/categories','layers','This is the inventory categories',0,0,'2023-08-07 08:30:35','2023-08-07 08:30:35'),(19,2,'Stock Categories','STCA','/inventory/stock/categories','work','Stock categories section',0,0,'2023-08-07 08:32:39','2023-08-07 08:33:28'),(20,2,'Stock Types','SCTY','/inventory/stock/types','cases','Stock Types',0,0,'2023-08-07 08:34:37','2023-08-07 08:34:37'),(21,2,'Tags','TGSA','/inventory/tags','bookmark','Tags description',0,0,'2023-08-07 08:36:04','2023-08-07 08:36:04'),(22,2,'Brands','BRDS','/inventory/brands','label','Brands section',0,0,'2023-08-07 08:37:02','2023-08-07 08:37:02'),(23,2,'Stock','STCK','/inventory/stock','storefront','Stock section',0,0,'2023-08-07 08:38:36','2023-08-07 08:38:36'),(24,2,'Stock Items','STIT','/inventory/stock/items','shopping_bag','Stock items section',0,0,'2023-08-07 08:39:24','2023-08-07 08:39:24');
 /*!40000 ALTER TABLE `modules` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1255,7 +1252,7 @@ CREATE TABLE `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=206 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=216 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1264,7 +1261,7 @@ CREATE TABLE `personal_access_tokens` (
 
 LOCK TABLES `personal_access_tokens` WRITE;
 /*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
-INSERT INTO `personal_access_tokens` VALUES (205,'App\\Models\\User',1,'Auth token for ADMIN','08133c6cadc2d9c1787909ca9a94a6afdccb00548a5f93e7f842c429f91de1f5','[\"*\"]','2023-07-31 14:57:55',NULL,'2023-07-31 14:53:52','2023-07-31 14:57:55');
+INSERT INTO `personal_access_tokens` VALUES (215,'App\\Models\\User',1,'Auth token for ADMIN','b07c3833b57e99934ce71738d14caac465cb0d65d21c37c567ffb6f8bf30e290','[\"*\"]','2023-08-11 08:37:41',NULL,'2023-08-10 09:20:53','2023-08-11 08:37:41');
 /*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1571,7 +1568,7 @@ CREATE TABLE `restocks` (
   KEY `restocks_stock_id_foreign` (`stock_id`),
   CONSTRAINT `restocks_stock_id_foreign` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`) ON DELETE CASCADE,
   CONSTRAINT `restocks_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1580,7 +1577,6 @@ CREATE TABLE `restocks` (
 
 LOCK TABLES `restocks` WRITE;
 /*!40000 ALTER TABLE `restocks` DISABLE KEYS */;
-INSERT INTO `restocks` VALUES (1,1,1,200,0,'2023-07-03 04:33:13','2023-07-03 04:33:13'),(2,1,2,200,0,'2023-07-03 04:33:48','2023-07-03 04:33:48'),(3,1,3,200,0,'2023-07-03 04:34:08','2023-07-03 04:34:08');
 /*!40000 ALTER TABLE `restocks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1693,7 +1689,7 @@ CREATE TABLE `staff_types` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `staff_types_label_unique` (`label`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1702,7 +1698,7 @@ CREATE TABLE `staff_types` (
 
 LOCK TABLES `staff_types` WRITE;
 /*!40000 ALTER TABLE `staff_types` DISABLE KEYS */;
-INSERT INTO `staff_types` VALUES (1,'Permanent','permanent','2023-06-20 12:51:38','2023-06-20 12:51:38');
+INSERT INTO `staff_types` VALUES (1,'Permanent','permanent','2023-06-20 12:51:38','2023-06-20 12:51:38'),(2,'Contract','contract','2023-08-02 17:28:45','2023-08-02 17:28:45'),(3,'Secondee','secondee','2023-08-02 17:28:52','2023-08-02 17:28:52'),(4,'Adhoc','adhoc','2023-08-02 17:28:59','2023-08-02 17:28:59');
 /*!40000 ALTER TABLE `staff_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1723,7 +1719,7 @@ CREATE TABLE `stock_categories` (
   PRIMARY KEY (`id`),
   KEY `stock_categories_inventory_category_id_foreign` (`inventory_category_id`),
   CONSTRAINT `stock_categories_inventory_category_id_foreign` FOREIGN KEY (`inventory_category_id`) REFERENCES `inventory_categories` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1732,7 +1728,7 @@ CREATE TABLE `stock_categories` (
 
 LOCK TABLES `stock_categories` WRITE;
 /*!40000 ALTER TABLE `stock_categories` DISABLE KEYS */;
-INSERT INTO `stock_categories` VALUES (1,1,'WORKSTATIONS',NULL,'2023-07-01 14:15:37','2023-07-01 14:15:37'),(2,1,'BEVERAGES',NULL,'2023-07-01 14:16:04','2023-07-01 14:16:04');
+INSERT INTO `stock_categories` VALUES (4,4,'Consumables',NULL,'2023-08-08 00:59:21','2023-08-08 00:59:21'),(5,6,'Printers',NULL,'2023-08-08 00:59:39','2023-08-08 00:59:39'),(6,7,'Vehicles',NULL,'2023-08-08 01:01:16','2023-08-08 01:01:16');
 /*!40000 ALTER TABLE `stock_categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1753,7 +1749,7 @@ CREATE TABLE `stock_types` (
   PRIMARY KEY (`id`),
   KEY `stock_types_stock_category_id_foreign` (`stock_category_id`),
   CONSTRAINT `stock_types_stock_category_id_foreign` FOREIGN KEY (`stock_category_id`) REFERENCES `stock_categories` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1762,7 +1758,7 @@ CREATE TABLE `stock_types` (
 
 LOCK TABLES `stock_types` WRITE;
 /*!40000 ALTER TABLE `stock_types` DISABLE KEYS */;
-INSERT INTO `stock_types` VALUES (1,1,'HARDWARE',NULL,'2023-07-01 21:51:47','2023-07-01 21:51:47'),(2,1,'SOFTWARE',NULL,'2023-07-01 21:51:55','2023-07-01 21:51:55');
+INSERT INTO `stock_types` VALUES (4,6,'Bus',NULL,'2023-08-08 12:03:30','2023-08-08 12:03:30'),(5,6,'Car',NULL,'2023-08-08 12:03:39','2023-08-08 12:03:39'),(6,6,'Truck',NULL,'2023-08-08 12:03:47','2023-08-08 12:03:47'),(7,6,'Tipper',NULL,'2023-08-08 12:04:03','2023-08-08 12:04:03');
 /*!40000 ALTER TABLE `stock_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1795,7 +1791,7 @@ CREATE TABLE `stocks` (
   KEY `stocks_department_id_foreign` (`department_id`),
   CONSTRAINT `stocks_department_id_foreign` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE CASCADE,
   CONSTRAINT `stocks_stock_type_id_foreign` FOREIGN KEY (`stock_type_id`) REFERENCES `stock_types` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1804,7 +1800,6 @@ CREATE TABLE `stocks` (
 
 LOCK TABLES `stocks` WRITE;
 /*!40000 ALTER TABLE `stocks` DISABLE KEYS */;
-INSERT INTO `stocks` VALUES (1,1,1,1,'PDF9833','PAVILION T','pavilion-t',200,'single',1,1,1,'2023-07-03 04:33:13','2023-07-03 04:35:20'),(2,2,1,1,'PDF12333','PAVILION SDF','pavilion-sdf',200,'single',1,1,1,'2023-07-03 04:33:48','2023-07-03 04:33:48'),(3,1,1,1,'PDF12332','DELL PASS','dell-pass',200,'single',1,1,1,'2023-07-03 04:34:08','2023-07-03 04:34:08');
 /*!40000 ALTER TABLE `stocks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1828,6 +1823,7 @@ CREATE TABLE `tagables` (
 
 LOCK TABLES `tagables` WRITE;
 /*!40000 ALTER TABLE `tagables` DISABLE KEYS */;
+INSERT INTO `tagables` VALUES (3,5,'App\\Models\\Stock'),(2,5,'App\\Models\\Stock'),(4,6,'App\\Models\\Stock'),(3,6,'App\\Models\\Stock'),(2,6,'App\\Models\\Stock');
 /*!40000 ALTER TABLE `tagables` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1844,7 +1840,7 @@ CREATE TABLE `tags` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1853,6 +1849,7 @@ CREATE TABLE `tags` (
 
 LOCK TABLES `tags` WRITE;
 /*!40000 ALTER TABLE `tags` DISABLE KEYS */;
+INSERT INTO `tags` VALUES (1,'Beveragies','2023-08-08 12:21:29','2023-08-08 12:21:29'),(2,'Laptop','2023-08-08 12:21:41','2023-08-08 12:21:41'),(3,'Devices','2023-08-08 12:21:47','2023-08-08 12:21:47'),(4,'Hardware','2023-08-08 12:22:01','2023-08-08 12:22:01');
 /*!40000 ALTER TABLE `tags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2100,7 +2097,7 @@ CREATE TABLE `users` (
   CONSTRAINT `users_grade_level_id_foreign` FOREIGN KEY (`grade_level_id`) REFERENCES `grade_levels` (`id`) ON DELETE CASCADE,
   CONSTRAINT `users_location_id_foreign` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`) ON DELETE CASCADE,
   CONSTRAINT `users_staff_type_id_foreign` FOREIGN KEY (`staff_type_id`) REFERENCES `staff_types` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2109,7 +2106,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,1,1,1,1,1,1,'Technical',NULL,'Administrator','ADMIN','admin@admin.com',NULL,'$2y$10$1iHvIM0apjusfNC1Fb.pJ.RBPLJ0JIoJlmH9ou.cxJSLJ3hicB.56',NULL,'2023-06-20 12:51:38','2023-06-20 13:21:16'),(2,2,3,1,1,1,1,'Bobby','Tamunotonye','Ekaro','18290','bobby.ekaro@ncdmb.gov.ng',NULL,'$2y$10$XokgROjifrcip7XFB4VaweacY6suqzGFf4oWWiMWGoXxc6SUaQwhi',NULL,'2023-06-20 13:18:43','2023-06-20 13:18:43');
+INSERT INTO `users` VALUES (1,1,1,1,1,1,1,'Technical',NULL,'Administrator','ADMIN','admin@admin.com',NULL,'$2y$10$1iHvIM0apjusfNC1Fb.pJ.RBPLJ0JIoJlmH9ou.cxJSLJ3hicB.56',NULL,'2023-06-20 12:51:38','2023-06-20 13:21:16'),(2,2,3,1,1,1,1,'Bobby','Tamunotonye','Ekaro','18290','bobby.ekaro@ncdmb.gov.ng',NULL,'$2y$10$XokgROjifrcip7XFB4VaweacY6suqzGFf4oWWiMWGoXxc6SUaQwhi',NULL,'2023-06-20 13:18:43','2023-06-20 13:18:43'),(4,3,3,1,1,1,1,'Olisaemeka',NULL,'Isefi','23456','iambobbymax@gmail.com',NULL,'$2y$10$NGwVR7GO9qlFa2udFxXSmuyjPtL8lxFjFSDzcLG.fIKo2nFl8OERi',NULL,'2023-08-06 22:03:49','2023-08-06 22:03:49'),(5,1,6,3,1,1,1,'Test','User','Again','11111','tech@tech.com',NULL,'$2y$10$9HsacWg/DNSWPeLsZOJSZunm2aRBxXujmHRghmB7ZvyaSQ8x0M0Xq',NULL,'2023-08-07 04:39:25','2023-08-07 04:39:25'),(6,3,2,1,1,1,1,'Tester',NULL,'Ekayp','23789','support@yam.ng',NULL,'$2y$10$IcZWp0wvgziYYPFhnXONRO8qHakupuHUHWxVkXXtMSuKG1IM7EfLa',NULL,'2023-08-07 04:40:29','2023-08-07 04:40:29'),(7,8,3,1,1,1,1,'Jerry',NULL,'Atabong','10041','jerry.atabong@ncdmb.gov.ng',NULL,'$2y$10$IbxHOCYwJMSicmw1g6JpT.B3.PDLCFYR8o3kcJTwjPU5AwN.ijF7C',NULL,'2023-08-07 04:42:31','2023-08-07 04:42:31');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2188,7 +2185,6 @@ CREATE TABLE `vehicle_requests` (
 
 LOCK TABLES `vehicle_requests` WRITE;
 /*!40000 ALTER TABLE `vehicle_requests` DISABLE KEYS */;
-INSERT INTO `vehicle_requests` VALUES (1,1,1,1,'VHC3221','2023-09-10 00:00:00','2023-09-13 00:00:00',3,'Enugu',NULL,0.00,'official','pending',0,'2023-07-17 06:55:44','2023-07-17 06:56:43');
 /*!40000 ALTER TABLE `vehicle_requests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2227,4 +2223,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-31 18:28:43
+-- Dump completed on 2023-08-11 10:49:29

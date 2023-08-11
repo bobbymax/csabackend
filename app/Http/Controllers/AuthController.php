@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,14 +40,14 @@ class AuthController extends Controller
         Auth::user()->tokens()->delete();
         $token = Auth::user()->createToken('Auth token for ' . Auth::user()->staff_no)->plainTextToken;
 
-        return $this->success(['token' => $token, 'user' => Auth::user()]);
+        return $this->success(['token' => $token, 'user' => new UserResource(Auth::user())]);
     }
 
     public function refresh(): \Illuminate\Http\JsonResponse
     {
         $user = Auth::user();
         $user->tokens()->delete();
-        return $this->success(['user' => $user, 'token' => $user->createToken($user->staff_no)->plainTextToken]);
+        return $this->success(['user' => new UserResource($user), 'token' => $user->createToken($user->staff_no)->plainTextToken]);
     }
 
     public function logout(): \Illuminate\Http\JsonResponse

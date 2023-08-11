@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\StockResource;
 use App\Models\Restock;
 use App\Models\Stock;
+use App\Models\Tag;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +26,7 @@ class StockController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        return $this->success(Stock::latest()->get());
+        return $this->success(StockResource::collection(Stock::latest()->get()));
     }
 
     /**
@@ -39,22 +41,33 @@ class StockController extends Controller
             'code' => 'required|string|max:8|unique:stocks',
             'name' => 'required|string|max:255',
             'measure' => 'required|string|max:255|in:single,packs,boxes,cartons',
+            'tags' => 'required|array'
         ]);
 
         if ($validator->fails()) {
             return $this->error($validator->errors(), 'Please fix the following errors:', 500);
         }
 
-        $stock = Stock::create([...$request->all(), 'label' => Str::slug($request->name)]);
+        $stock = Stock::create([...$request->except('number'), 'label' => Str::slug($request->name)]);
 
-        if ($stock) {
-            Restock::create([
-                'stock_id' => $stock->id,
-                'user_id' => Auth::user()->id,
-                'quantity' => $request->quantity,
-            ]);
+        if ($request->has('tags')) {
+            foreach ($request->tags as $value) {
+                $tag = Tag::find($value);
+                if ($tag) {
+                    $stock->tags()->save($tag);
+                }
+            }
         }
-        return $this->success($stock, 'Stock has been created successfully!!', 201);
+
+//        if ($stock && $stock->restockable) {
+//            Restock::create([
+//                'stock_id' => $stock->id,
+//                'user_id' => Auth::user()->id,
+//                'quantity' => $request->quantity,
+//            ]);
+//        }
+
+        return $this->success(new StockResource($stock), 'Stock has been created successfully!!', 201);
     }
 
     /**
@@ -62,7 +75,7 @@ class StockController extends Controller
      */
     public function show(Stock $stock): \Illuminate\Http\JsonResponse
     {
-        return $this->success($stock);
+        return $this->success(new StockResource($stock));
     }
 
     /**
@@ -81,8 +94,8 @@ class StockController extends Controller
             return $this->error($validator->errors(), 'Please fix the following errors:', 500);
         }
 
-        $stock->update([...$request->except('code'), 'label' => Str::slug($request->name)]);
-        return $this->success($stock, 'Stock has been updated successfully!!');
+        $stock->update([...$request->except('code', 'number'), 'label' => Str::slug($request->name)]);
+        return $this->success(new StockResource($stock), 'Stock has been updated successfully!!');
     }
 
     /**

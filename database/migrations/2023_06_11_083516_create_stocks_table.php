@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('stock_type_id')->references('id')->on('stock_types')->onDelete('cascade');
             $table->bigInteger('department_id')->unsigned();
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
-            $table->string('code')->unique();
+            $table->string('code')->unique()->nullable();
             $table->string('name');
             $table->string('label')->unique();
             $table->bigInteger('quantity')->default(0);

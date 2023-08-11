@@ -34,6 +34,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::apiResource('inventoryCategories', 'InventoryCategoryController');
     Route::apiResource('stockCategories', 'StockCategoryController');
     Route::apiResource('stockTypes', 'StockTypeController');
+    Route::apiResource('tags', 'TagController');
     Route::apiResource('stocks', 'StockController');
     Route::apiResource('items', 'ItemController');
     Route::apiResource('itemFeatures', 'ItemFeatureController');
@@ -45,6 +46,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::apiResource('quotas', 'QuotaController');
     Route::apiResource('quotaItems', 'QuotaItemController');
     Route::apiResource('quotaDistributions', 'QuotaDistributionController');
+
 
     // Fleet Management Routes
     Route::apiResource('vehicleRequests', 'VehicleRequestController');

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Application;
 use App\Models\Availability;
 use App\Models\Company;
 use App\Models\Department;
@@ -9,6 +10,7 @@ use App\Models\DepartmentType;
 use App\Models\GradeLevel;
 use App\Models\Group;
 use App\Models\Location;
+use App\Models\Module;
 use App\Models\StaffType;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -59,7 +61,7 @@ class Dependency extends Command
             'password' => Hash::make('password')
         ]);
 
-        $group = $this->group();
+        $group = $this->administrator()['group'];
 
         $user->groups()->save($group);
         $this->info('Dependencies installed successfully!!');
@@ -80,6 +82,37 @@ class Dependency extends Command
             'name' => 'Available',
             'label' => 'available'
         ]);
+    }
+
+    private function application()
+    {
+        return Application::create([
+            'name' => 'Administration',
+            'code' => 'ADMIN',
+            'path' => '/administration',
+            'icon' => 'engineering',
+            'description' => 'Administrator Modules'
+        ]);
+    }
+
+    private function administrator(): array
+    {
+        $application = $this->application();
+        $group = $this->group();
+
+        $module = Module::create([
+            'application_id' => $application?->id,
+            'name' => 'Modules',
+            'code' => 'MODS',
+            'path' => '/administration/modules',
+            'icon' => 'widgets',
+            'description' => 'Administrator Modules Children'
+        ]);
+
+        $module->groups()->save($group);
+        $application->groups()->save($group);
+
+        return compact('module', 'group');
     }
 
     private function location()

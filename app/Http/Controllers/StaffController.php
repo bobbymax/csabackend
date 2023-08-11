@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class StaffController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        return $this->success(User::latest()->get());
+        return $this->success(UserResource::collection(User::latest()->get()));
     }
 
     /**
@@ -48,7 +49,7 @@ class StaffController extends Controller
         }
 
         $staff = User::create([...$request->all(), 'password' => Hash::make('password')]);
-        return $this->success($staff, 'User Record has been created successfully!!', 201);
+        return $this->success(new UserResource($staff), 'User Record has been created successfully!!', 201);
     }
 
     /**
@@ -56,7 +57,7 @@ class StaffController extends Controller
      */
     public function show(User $user): \Illuminate\Http\JsonResponse
     {
-        return $this->success($user);
+        return $this->success(new UserResource($user));
     }
 
     /**
@@ -82,7 +83,7 @@ class StaffController extends Controller
         }
 
         $user->update($request->all());
-        return $this->success($user, 'User Record has been updated successfully!!');
+        return $this->success(new UserResource($user), 'User Record has been updated successfully!!');
     }
 
     /**

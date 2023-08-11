@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\InventoryCategoryResource;
 use App\Models\Department;
 use App\Models\InventoryCategory;
 use App\Traits\HttpResponses;
@@ -23,7 +24,7 @@ class InventoryCategoryController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        return $this->success(Auth::user()->department->inventoryCategories);
+        return $this->success(InventoryCategoryResource::collection(Auth::user()->department->inventoryCategories));
     }
 
     /**
@@ -32,19 +33,22 @@ class InventoryCategoryController extends Controller
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'department_id' => 'required|integer',
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
+            'departments' => 'required|array'
         ]);
 
         if ($validator->fails()) {
             return $this->error($validator->errors(), 'Please fix the following errors:', 500);
         }
 
-        $department = Department::find($request->department_id);
-        $inventoryCategory = InventoryCategory::create($request->except('department_id'));
-        $department?->inventoryCategories()->save($inventoryCategory);
+        $inventoryCategory = InventoryCategory::create($request->except('departments'));
 
-        return $this->success($inventoryCategory, 'This category has been created successfully!!', 201);
+        foreach ($request->departments as $value) {
+            $department = Department::find($value);
+            $inventoryCategory?->departments()->save($department);
+        }
+
+        return $this->success(new InventoryCategoryResource($inventoryCategory), 'This category has been created successfully!!', 201);
     }
 
     /**
@@ -52,7 +56,7 @@ class InventoryCategoryController extends Controller
      */
     public function show(InventoryCategory $inventoryCategory): \Illuminate\Http\JsonResponse
     {
-        return $this->success($inventoryCategory);
+        return $this->success(new InventoryCategoryResource($inventoryCategory));
     }
 
     /**
@@ -61,16 +65,35 @@ class InventoryCategoryController extends Controller
     public function update(Request $request, InventoryCategory $inventoryCategory): \Illuminate\Http\JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
+            'departments' => 'required|array'
         ]);
 
         if ($validator->fails()) {
             return $this->error($validator->errors(), 'Please fix the following errors:', 500);
         }
 
-        $inventoryCategory->update($request->all());
+        $inventoryCategory->update($request->only('name'));
 
-        return $this->success($inventoryCategory, 'This category has been updated successfully!!');
+        if ($request->has('departments')) {
+            foreach ($inventoryCategory->departments->pluck('id')->toArray() as $value) {
+                $department = Department::find($value);
+
+                if (!in_array($department?->id, $request->departments)) {
+                    $inventoryCategory->departments()->detach($department);
+                }
+            }
+
+            foreach ($request->departments as $value) {
+                $dept = Department::find($value);
+
+                if (!in_array($dept?->id, $inventoryCategory->departments->pluck('id')->toArray())) {
+                    $inventoryCategory->departments()->save($dept);
+                }
+            }
+        }
+
+        return $this->success(new InventoryCategoryResource($inventoryCategory), 'This category has been updated successfully!!');
     }
 
     /**

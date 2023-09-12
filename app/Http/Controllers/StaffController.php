@@ -6,6 +6,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,6 +25,11 @@ class StaffController extends Controller
     public function index(): \Illuminate\Http\JsonResponse
     {
         return $this->success(UserResource::collection(User::latest()->get()));
+    }
+
+    public function departmentStaff(): \Illuminate\Http\JsonResponse
+    {
+        return $this->success(UserResource::collection(User::where('department_id', Auth::user()->department_id)->latest()->get()));
     }
 
     /**

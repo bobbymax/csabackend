@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\RequisitionApproved;
+use App\Events\RequisitionConfirmed;
+use App\Events\TaskAssigned;
+use App\Listeners\SendRequisitionApprovedMail;
+use App\Listeners\SendRequisitionConfirmationMail;
+use App\Listeners\SendTaskAssignedConfirmationEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +24,18 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        TaskAssigned::class => [
+            SendTaskAssignedConfirmationEmail::class,
+        ],
+
+        RequisitionApproved::class => [
+            SendRequisitionApprovedMail::class,
+        ],
+
+        RequisitionConfirmed::class => [
+            SendRequisitionConfirmationMail::class
+        ]
     ];
 
     /**

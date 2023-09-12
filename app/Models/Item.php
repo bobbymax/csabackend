@@ -11,11 +11,6 @@ class Item extends Model
 
     protected $guarded = [''];
 
-    public function supplier(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Company::class, 'company_id');
-    }
-
     public function stock(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Stock::class, 'stock_id');
@@ -36,7 +31,7 @@ class Item extends Model
         return $this->morphOne(Upload::class, 'uploadable');
     }
 
-    public function tags()
+    public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphToMany(Tag::class, 'tagable');
     }

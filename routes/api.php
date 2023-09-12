@@ -9,13 +9,24 @@ Route::middleware('auth:sanctum')->get('user', function (Request $request) {
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
 
+    //Inventory custom routes
+    Route::get('pending/requisitions', 'RequisitionController@getPendingRequisitions');
+    Route::get('department/staff', 'StaffController@departmentStaff');
+    Route::patch('alter/requisitions/{requisition}', 'RequisitionController@updateStatus');
+    Route::get('approve/requisitions', 'RequisitionController@getRequisitionsForApproval');
+    Route::get('handle/requisitions', 'RequisitionController@getProgressRequisitions');
+    Route::patch('treat/requisitionItems/{requisitionItem}', 'RequisitionItemController@treatReq');
+    Route::patch('update/status/requisitionItems/{requisitionItem}', 'RequisitionItemController@updateStatus');
+
     // Helpdesk custom routes
     Route::patch('assign/tickets/{ticket}', 'TicketController@assign');
+    Route::post('imports', 'OperationController@import');
 
     Route::post('login', 'AuthController@login');
     Route::get('logout', 'AuthController@logout');
     Route::get('refresh', 'AuthController@refresh');
 
+    Route::apiResource('remarks', 'RemarkController');
     Route::apiResource('companies', 'CompanyController');
     Route::apiResource('locations', 'LocationController');
     Route::apiResource('availabilities', 'AvailabilityController');
@@ -76,4 +87,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::apiResource('seatings', 'SeatingController');
     Route::apiResource('bookings', 'BookingController');
     Route::apiResource('bookingDetails', 'BookingDetailController');
+
+    // Tasks Management Routes
+    Route::apiResource('tasks', 'TaskController');
 });

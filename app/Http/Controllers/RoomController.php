@@ -32,6 +32,7 @@ class RoomController extends Controller
         $validator = Validator::make($request->all(), [
             'hall_category_id' => 'required|integer',
             'wing_id' => 'required|integer',
+            'floor_id' => 'required|integer',
             'name' => 'required|string|max:255',
             'max_sitting_capacity' => 'required|integer',
         ]);
@@ -40,7 +41,7 @@ class RoomController extends Controller
             return $this->error($validator->errors(), 'Please fix the following errors', 500);
         }
 
-        $room = Room::create($request->all());
+        $room = Room::create($request->except('id'));
         return $this->success($room, 'Room has been created successfully!', 201);
     }
 

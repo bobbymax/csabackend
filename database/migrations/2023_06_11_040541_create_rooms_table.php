@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('hall_category_id')->unsigned();
             $table->foreign('hall_category_id')->references('id')->on('hall_categories')->onDelete('cascade');
             $table->bigInteger('wing_id')->unsigned();
-            $table->foreign('wing_id')->references('id')->on('hall_categories')->onDelete('cascade');
+            $table->foreign('wing_id')->references('id')->on('wings')->onDelete('cascade');
             $table->bigInteger('floor_id')->default(0);
             $table->string('name');
             $table->bigInteger('max_sitting_capacity');

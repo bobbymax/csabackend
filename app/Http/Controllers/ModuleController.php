@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ModuleResource;
 use App\Models\Module;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class ModuleController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        return $this->success(Module::latest()->get());
+        return $this->success(ModuleResource::collection(Module::latest()->get()));
     }
 
     /**
@@ -43,7 +44,7 @@ class ModuleController extends Controller
         }
 
         $module = Module::create($request->all());
-        return $this->success($module, 'Module created successfully!!', 201);
+        return $this->success(new ModuleResource($module), 'Module created successfully!!', 201);
     }
 
     /**
@@ -51,7 +52,7 @@ class ModuleController extends Controller
      */
     public function show(Module $module): \Illuminate\Http\JsonResponse
     {
-        return $this->success($module);
+        return $this->success(new ModuleResource($module));
     }
 
     /**
@@ -73,7 +74,7 @@ class ModuleController extends Controller
         }
 
         $module->update($request->all());
-        return $this->success($module, 'Module updated successfully!!');
+        return $this->success(new ModuleResource($module), 'Module updated successfully!!');
     }
 
     /**

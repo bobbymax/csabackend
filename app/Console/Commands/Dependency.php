@@ -109,7 +109,17 @@ class Dependency extends Command
             'description' => 'Administrator Modules Children'
         ]);
 
+        $module2 = Module::create([
+            'application_id' => $application?->id,
+            'name' => 'Imports',
+            'code' => 'IMPT',
+            'path' => '/administration/imports',
+            'icon' => 'publish',
+            'description' => 'Administrator Import Children'
+        ]);
+
         $module->groups()->save($group);
+        $module2->groups()->save($group);
         $application->groups()->save($group);
 
         return compact('module', 'group');

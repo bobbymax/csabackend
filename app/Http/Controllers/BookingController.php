@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BookingResource;
 use App\Models\Booking;
 use App\Models\BookingDetail;
 use App\Traits\HttpResponses;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
@@ -23,7 +25,12 @@ class BookingController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        return $this->success(Booking::with('details')->latest()->get());
+        return $this->success(BookingResource::collection(Booking::with('details')->where('user_id', Auth::user()->id)->latest()->get()));
+    }
+
+    public function getPendingBookingRequests(): \Illuminate\Http\JsonResponse
+    {
+        return $this->success(BookingResource::collection(Booking::with('details')->latest()->get()));
     }
 
     /**
@@ -34,11 +41,11 @@ class BookingController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
             'code' => 'required|string|max:255|unique:bookings',
-            'budget_code' => 'required|string|max:15',
+            'budget_code' => 'string|max:15',
             'start' => 'required|date',
             'finish' => 'required|date',
-            'duration' => 'required|integer',
             'description' => 'required|min:3',
+            'title' => 'required|string|max:255',
             'details' => 'required|array'
         ]);
 
@@ -46,15 +53,29 @@ class BookingController extends Controller
             return $this->error($validator->errors(), 'Please fix the following errors:', 422);
         }
 
-        $booking = Booking::create([...$request->except('details', 'start', 'finish'), 'start' => Carbon::parse($request->start), 'finish' => Carbon::parse($request->finish)]);
+        $booking = Booking::create([...$request->except('details', 'start', 'finish', 'startTime', 'endTime', 'id'), 'start' => Carbon::parse($request->start), 'finish' => Carbon::parse($request->finish)]);
 
         if ($booking) {
             foreach ($request->details as $detail) {
-                BookingDetail::create([...$detail, 'booking_id' => $booking->id]);
+                BookingDetail::create([
+                    'booking_id' => $booking->id,
+                    'user_id' => $detail['contact_id'],
+                    'room_id' => $detail['room_id'],
+                    'seating_id' => $detail['seating_id'],
+                    'start' => Carbon::parse($detail['start']),
+                    'finish' => Carbon::parse($detail['finish']),
+                    'pa_system' => $detail['pa_system'],
+                    'audio_visual_system' => $detail['audio_visual_system'],
+                    'internet' => $detail['internet'],
+                    'tea_snacks' => $detail['tea_snacks'],
+                    'breakfast' => $detail['breakfast'],
+                    'lunch' => $detail['lunch'],
+                    'description' => $detail['description'],
+                ]);
             }
         }
 
-        return $this->success($booking, 'Booking request has been created successfully!!', 201);
+        return $this->success(new BookingResource($booking), 'Booking request has been created successfully!!', 201);
     }
 
     /**
@@ -62,7 +83,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking): \Illuminate\Http\JsonResponse
     {
-        return $this->success($booking);
+        return $this->success(new BookingResource($booking));
     }
 
     /**
@@ -71,20 +92,21 @@ class BookingController extends Controller
     public function update(Request $request, Booking $booking): \Illuminate\Http\JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer',
-            'budget_code' => 'required|string|max:15',
-            'start' => 'required|date',
-            'finish' => 'required|date',
-            'duration' => 'required|integer',
-            'description' => 'required|min:3',
+            'status' => 'required|string|max:255|in:approved,denied',
         ]);
 
         if ($validator->fails()) {
             return $this->error($validator->errors(), 'Please fix the following errors:', 422);
         }
 
-        $booking->update([...$request->except('details', 'code', 'start', 'finish'), 'start' => Carbon::parse($request->start), 'finish' => Carbon::parse($request->finish)]);
-        return $this->success($booking, 'Booking request has been updated successfully!!');
+        $booking->update($request->all());
+
+        if ($request->status === "approved") {
+            $booking->task->status = "completed";
+            $booking->task->save();
+        }
+
+        return $this->success(new BookingResource($booking), 'Booking request has been updated successfully!!');
     }
 
     /**

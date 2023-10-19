@@ -10,6 +10,7 @@ class Reservation extends Model
     use HasFactory;
 
     protected $guarded = [''];
+    protected $dates = ['begin', 'elapse'];
 
     public function logisticsRequest(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -18,7 +19,7 @@ class Reservation extends Model
 
     public function staff(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id')->where('user_id', '>', 0);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function task(): \Illuminate\Database\Eloquent\Relations\MorphOne

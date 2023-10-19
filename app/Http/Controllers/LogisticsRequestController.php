@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LogisticsRequestResource;
 use App\Models\LogisticsRequest;
 use App\Models\Reservation;
 use App\Traits\HttpResponses;
@@ -24,7 +25,12 @@ class LogisticsRequestController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        return $this->success(LogisticsRequest::where('user_id', Auth::user()->id)->latest()->get());
+        return $this->success(LogisticsRequestResource::collection(LogisticsRequest::where('user_id', Auth::user()->id)->latest()->get()));
+    }
+
+    public function getPendingReservations(): \Illuminate\Http\JsonResponse
+    {
+        return $this->success(LogisticsRequestResource::collection(LogisticsRequest::latest()->get()));
     }
 
     /**
@@ -34,7 +40,7 @@ class LogisticsRequestController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
-            'code' => 'required|string|max:10|unique:logistics_requests',
+            'code' => 'required|string|max:255|unique:logistics_requests',
             'budget_code' => 'required|string|max:10',
             'description' => 'required|min:3',
             'reservations' => 'required|array'
@@ -48,23 +54,25 @@ class LogisticsRequestController extends Controller
 
         foreach($request->reservations as $reservation) {
             Reservation::create([
-                'user_id' => $reservation['user_id'],
+                'user_id' => $reservation['beneficiary_id'],
                 'logistics_request_id' => $logisticsRequest->id,
                 'request_type' => $reservation['request_type'],
                 'type' => $reservation['type'],
-                'flight_type' => $reservation['flight_type'],
+                'flight_type' => $reservation['flight_type'] ?? "international",
                 'name' => $reservation['name'],
-                'mobile' => $reservation['mobile'],
+                'take_off' => $reservation['take_off'],
+                'destination' => $reservation['destination'],
                 'begin' => Carbon::parse($reservation['begin']),
                 'elapse' => Carbon::parse($reservation['elapse']),
                 'duration' => $reservation['duration'],
                 'approval_memo' => $reservation['approval_memo'],
                 'data_page' => $reservation['data_page'],
-                'visa' => $reservation['visa']
+                'visa' => $reservation['visa'],
+                'instructions' => $reservation['instructions']
             ]);
         }
 
-        return $this->success($logisticsRequest, 'Logistics Request has been created successfully!!', 201);
+        return $this->success(new LogisticsRequestResource($logisticsRequest), 'Logistics Request has been created successfully!!', 201);
     }
 
     /**
@@ -72,7 +80,7 @@ class LogisticsRequestController extends Controller
      */
     public function show(LogisticsRequest $logisticsRequest): \Illuminate\Http\JsonResponse
     {
-        return $this->success($logisticsRequest);
+        return $this->success(new LogisticsRequestResource($logisticsRequest));
     }
 
     /**
@@ -92,7 +100,26 @@ class LogisticsRequestController extends Controller
         }
 
         $logisticsRequest->update($request->except('reservations'));
-        return $this->success($logisticsRequest, 'Logistics Request has been updated successfully!!');
+        return $this->success(new LogisticsRequestResource($logisticsRequest), 'Logistics Request has been updated successfully!!');
+    }
+
+    public function updateLogisticsRequestStatus(Request $request, LogisticsRequest $logisticsRequest): \Illuminate\Http\JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|string|max:255|in:registered,approved,denied,processing,confirmed,canceled',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error($validator->errors(), 'Please fix the following errors:', 500);
+        }
+        $logisticsRequest->update($request->all());
+
+        if ($request->status === "confirmed") {
+            $logisticsRequest->task->status = "completed";
+            $logisticsRequest->task->save();
+        }
+
+        return $this->success(new LogisticsRequestResource($logisticsRequest), 'Logistics Request has been updated successfully!!');
     }
 
     /**

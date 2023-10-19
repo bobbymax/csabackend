@@ -26,6 +26,11 @@ class Module extends Model
         return $this->morphToMany(Group::class, 'groupable');
     }
 
+    public function departments(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Department::class, 'departmentable');
+    }
+
     public function canBeAccessedBy(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(AccessControl::class);

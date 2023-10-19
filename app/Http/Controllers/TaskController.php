@@ -30,6 +30,12 @@ class TaskController extends Controller
         return $this->success(TaskResource::collection(Auth::user()->tasks));
     }
 
+    public function getTasks(): \Illuminate\Http\JsonResponse
+    {
+//        return $this->success(TaskResource::collection(Task::where('department_id', Auth::user()->department_id)->where('status', 'pending')->latest()->get()));
+        return $this->success(TaskResource::collection(Task::latest()->get()));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -76,6 +82,30 @@ class TaskController extends Controller
             'requisition' => Requisition::find($id),
             'helpdesk' => Ticket::find($id),
         };
+    }
+
+    public function assign(Request $request, Task $task): \Illuminate\Http\JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'description' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error($validator->errors(), 'Please fix the following errors!!', 500);
+        }
+
+        $task->update([...$request->except('task_id', 'user_id'), 'status' => 'ongoing']);
+        $staff = User::find($request->user_id);
+
+        if (! $staff) {
+            return $this->error(null, 'Wrong user ID input', 422);
+        }
+
+        $staff->tasks()->save($task);
+        TaskAssigned::dispatch($task, $staff);
+
+        return $this->success(new TaskResource($task), 'Task has been assigned successfully!!', 200);
     }
 
     /**

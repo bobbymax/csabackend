@@ -20,4 +20,9 @@ class LogisticsRequest extends Model
     {
         return $this->hasMany(Reservation::class);
     }
+
+    public function task(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
+        return $this->morphOne(Task::class, 'taskable');
+    }
 }

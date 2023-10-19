@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ReservationResource;
+use App\Models\Consonance;
 use App\Models\Reservation;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -22,7 +24,7 @@ class ReservationController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        return $this->success(Reservation::where('user_id', Auth::user()->id)->latest()->get());
+        return $this->success(ReservationResource::collection(Reservation::where('user_id', Auth::user()->id)->latest()->get()));
     }
 
     /**
@@ -30,7 +32,40 @@ class ReservationController extends Controller
      */
     public function show(Reservation $reservation): \Illuminate\Http\JsonResponse
     {
-        return $this->success($reservation);
+        return $this->success(new ReservationResource($reservation));
+    }
+
+    public function store(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'reservation_id' => 'required|integer',
+            'itineraries' => 'required|array'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error($validator->errors(), 'Please fix the following errors:', 500);
+        }
+
+        $reservation = Reservation::find($request->reservation_id);
+
+        if (! $reservation) {
+            return $this->error(null, 'Wrong Reservation ID provided', 422);
+        }
+
+        foreach ($request->itineraries as $itinerary) {
+            $consonance = new Consonance;
+            $consonance->user_id = $request->user_id;
+            $consonance->description = $itinerary['description'];
+            $consonance->path = $itinerary['itinerary'];
+            $reservation->consonances()->save($consonance);
+        }
+
+        $reservation->update([
+            'stage' => 'review'
+        ]);
+
+        return $this->success(new ReservationResource($reservation), 'Reservation updated successfully!!');
     }
 
     /**
@@ -45,6 +80,8 @@ class ReservationController extends Controller
             'flight_type' => 'required|string|max:255|in:local,international',
             'name' => 'required|string|max:255',
             'mobile' => 'required|string',
+            'take_off' => 'required|string',
+            'destination' => 'required|string',
             'begin' => 'required|date',
             'elapse' => 'required|date',
             'duration' => 'required|integer',
@@ -55,7 +92,7 @@ class ReservationController extends Controller
         }
 
         $reservation->update($request->all());
-        return $this->success($reservation, 'Reservation updated successfully!!');
+        return $this->success(new ReservationResource($reservation), 'Reservation updated successfully!!');
     }
 
     /**

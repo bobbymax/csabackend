@@ -41,6 +41,7 @@ class TicketController extends Controller
             'floor_id' => 'required|integer',
             'related_issue_id' => 'required',
             'code' => 'required|string|max:8|unique:tickets',
+            'category' => 'required|sting|max:255|in:incident,support,other',
             'description' => 'required|min:3'
         ]);
 

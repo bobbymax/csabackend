@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BookingResource;
+use App\Http\Resources\ReservationResource;
 use App\Models\Application;
+use App\Models\Booking;
 use App\Models\Group;
 use App\Models\Module;
+use App\Models\Reservation;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class OperationController extends Controller
@@ -18,9 +23,13 @@ class OperationController extends Controller
         $this->middleware('auth:sanctum');
     }
 
-    public function operations()
+    public function operations(): \Illuminate\Http\JsonResponse
     {
-//        $flights =
+        $bookings = BookingResource::collection(Booking::where('user_id', Auth::user()->id)->latest()->get());
+        $flights = ReservationResource::collection(Reservation::where('user_id', Auth::user()->id)->where('type', 'flight')->latest()->get());
+        $hotels = ReservationResource::collection(Reservation::where('user_id', Auth::user()->id)->where('type', 'hotel')->latest()->get());
+
+        return $this->success(compact('bookings', 'flights', 'hotels'));
     }
 
     public function import(Request $request): \Illuminate\Http\JsonResponse

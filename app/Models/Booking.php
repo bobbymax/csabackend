@@ -10,6 +10,8 @@ class Booking extends Model
     use HasFactory;
 
     protected $guarded = [''];
+    protected $dates = ['start', 'finish'];
+
 
     public function staff(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

@@ -23,6 +23,7 @@ class ApplicationResource extends JsonResource
             'path' => $this->path,
             'description' => $this->description,
             'modules' => $this->modules,
+            'departments' => $this->departments,
             'groups' => $this->groups,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at

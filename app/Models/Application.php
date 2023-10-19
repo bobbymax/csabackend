@@ -20,4 +20,9 @@ class Application extends Model
     {
         return $this->morphToMany(Group::class, 'groupable');
     }
+
+    public function departments(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Department::class, 'departmentable');
+    }
 }

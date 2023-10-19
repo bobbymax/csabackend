@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Models\Group;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -47,7 +48,8 @@ class StaffController extends Controller
             'firstname' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'staff_no' => 'required|string|max:255|unique:users',
-            'email' => 'required|string|max:255|email|unique:users'
+            'email' => 'required|string|max:255|email|unique:users',
+            'groups' => 'required|array'
         ]);
 
         if ($validator->fails()) {
@@ -55,6 +57,15 @@ class StaffController extends Controller
         }
 
         $staff = User::create([...$request->all(), 'password' => Hash::make('password')]);
+
+        foreach ($request->groups as $value) {
+            $group = Group::find($value);
+
+            if ($group) {
+                $staff->groups()->save($group);
+            }
+        }
+
         return $this->success(new UserResource($staff), 'User Record has been created successfully!!', 201);
     }
 
@@ -81,7 +92,8 @@ class StaffController extends Controller
             'firstname' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'staff_no' => 'required|string|max:255',
-            'email' => 'required|string|max:255'
+            'email' => 'required|string|max:255',
+            'groups' => 'required|array'
         ]);
 
         if ($validator->fails()) {
@@ -89,6 +101,15 @@ class StaffController extends Controller
         }
 
         $user->update($request->all());
+
+        foreach ($request->groups as $value) {
+            $group = Group::find($value);
+
+            if ($group && !in_array($group?->id, $user?->groups->pluck('id')->toArray())) {
+                $user->groups()->save($group);
+            }
+        }
+
         return $this->success(new UserResource($user), 'User Record has been updated successfully!!');
     }
 

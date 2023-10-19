@@ -38,7 +38,7 @@ class GroupController extends Controller
             return $this->error($validator->errors(), 'Please fix the following errors!!', 500);
         }
 
-        $group = Group::create([$request->except('id'), 'label' => Str::slug($request->name)]);
+        $group = Group::create([...$request->except('id'), 'label' => Str::slug($request->name)]);
 
         return $this->success($group, 'Group created successfully!!', 201);
     }

@@ -17,14 +17,21 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::get('handle/requisitions', 'RequisitionController@getProgressRequisitions');
     Route::patch('treat/requisitionItems/{requisitionItem}', 'RequisitionItemController@treatReq');
     Route::patch('update/status/requisitionItems/{requisitionItem}', 'RequisitionItemController@updateStatus');
+    Route::get('operations', 'OperationController@operations');
+    Route::get('fetch/tasks', 'TaskController@getTasks');
+    Route::get('pending/reservations', 'LogisticsRequestController@getPendingReservations');
+    Route::get('fetch/pending/schedules', 'BookingController@getPendingBookingRequests');
 
     // Helpdesk custom routes
     Route::patch('assign/tickets/{ticket}', 'TicketController@assign');
     Route::post('imports', 'OperationController@import');
 
+    Route::post('staff/assign/tasks/{task}', 'TaskController@assign');
+
     Route::post('login', 'AuthController@login');
     Route::get('logout', 'AuthController@logout');
     Route::get('refresh', 'AuthController@refresh');
+    Route::patch('status/logisticsRequests/{logisticsRequest}', 'LogisticsRequestController@updateLogisticsRequestStatus');
 
     Route::apiResource('remarks', 'RemarkController');
     Route::apiResource('companies', 'CompanyController');
@@ -69,6 +76,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     // Logistics Request Routes
     Route::apiResource('logisticsRequests', 'LogisticsRequestController');
     Route::apiResource('reservations', 'ReservationController');
+    Route::apiResource('consonances', 'ConsonanceController');
 
 
     // Helpdesk Routes

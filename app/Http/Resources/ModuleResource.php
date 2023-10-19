@@ -18,6 +18,10 @@ class ModuleResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'application_id' => $this->application_id,
+            'attributes' => [
+                'departments' => $this->departments,
+                'groups' => $this->groups
+            ],
             'code' => $this->code,
             'path' => $this->path,
             'icon' => $this->icon,

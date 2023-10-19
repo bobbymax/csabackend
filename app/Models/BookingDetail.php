@@ -11,6 +11,8 @@ class BookingDetail extends Model
 
     protected $guarded = [''];
 
+    protected $dates = ['start', 'finish'];
+
     public function booking(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Booking::class, 'booking_id');

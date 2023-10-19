@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ModuleResource;
+use App\Models\Department;
+use App\Models\Group;
 use App\Models\Module;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -36,7 +38,9 @@ class ModuleController extends Controller
             'code' => 'required|string|max:4|unique:modules',
             'path' => 'required|string|max:255|unique:modules',
             'icon' => 'required|string',
-            'description' => 'required'
+            'description' => 'required',
+            'departments' => 'required|array',
+            'groups' => 'required|array',
         ]);
 
         if ($validator->fails()) {
@@ -44,6 +48,23 @@ class ModuleController extends Controller
         }
 
         $module = Module::create($request->all());
+
+        foreach ($request->departments as $value) {
+            $department = Department::find($value);
+
+            if ($department) {
+                $module->departments()->save($department);
+            }
+        }
+
+        foreach ($request->groups as $value) {
+            $group = Group::find($value);
+
+            if ($group) {
+                $module->groups()->save($group);
+            }
+        }
+
         return $this->success(new ModuleResource($module), 'Module created successfully!!', 201);
     }
 
@@ -66,7 +87,9 @@ class ModuleController extends Controller
             'code' => 'required|string|max:4',
             'path' => 'required|string|max:255',
             'icon' => 'required|string',
-            'description' => 'required'
+            'description' => 'required',
+            'departments' => 'required|array',
+            'groups' => 'required|array',
         ]);
 
         if ($validator->fails()) {
@@ -74,6 +97,23 @@ class ModuleController extends Controller
         }
 
         $module->update($request->all());
+
+        foreach ($request->departments as $value) {
+            $department = Department::find($value);
+
+            if ($department && !in_array($department?->id, $module?->departments->pluck('id')->toArray())) {
+                $module->departments()->save($department);
+            }
+        }
+
+        foreach ($request->groups as $value) {
+            $group = Group::find($value);
+
+            if ($group && !in_array($group?->id, $module?->groups->pluck('id')->toArray())) {
+                $module->groups()->save($group);
+            }
+        }
+
         return $this->success(new ModuleResource($module), 'Module updated successfully!!');
     }
 

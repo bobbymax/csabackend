@@ -9,6 +9,8 @@ class Consonance extends Model
 {
     use HasFactory;
 
+    protected $guarded = [''];
+
     public function staff(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

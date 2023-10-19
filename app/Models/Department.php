@@ -11,6 +11,16 @@ class Department extends Model
 
     protected $guarded = [''];
 
+    public function applications(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphedByMany(Application::class, 'departmentable');
+    }
+
+    public function modules(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphedByMany(Module::class, 'departementable');
+    }
+
     public function approvals(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Approval::class);

@@ -46,7 +46,8 @@ class AuthController extends Controller
     public function refresh(): \Illuminate\Http\JsonResponse
     {
         $user = Auth::user();
-        $user->tokens()->delete();
+        $user->tokens()->refresh();
+        // $user->tokens()->delete();
         return $this->success(['user' => new UserResource($user), 'token' => $user->createToken($user->staff_no)->plainTextToken]);
     }
 

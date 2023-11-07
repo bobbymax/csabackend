@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TicketResource;
 use App\Models\Company;
 use App\Models\Task;
 use App\Models\Ticket;
@@ -25,7 +26,7 @@ class TicketController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        return $this->success(Ticket::where('user_id', Auth::user()->id)->latest()->get());
+        return $this->success(TicketResource::collection(Ticket::where('user_id', Auth::user()->id)->latest()->get()));
     }
 
     /**
@@ -39,8 +40,7 @@ class TicketController extends Controller
             'issue_id' => 'required|integer',
             'location_id' => 'required|integer',
             'floor_id' => 'required|integer',
-            'related_issue_id' => 'required',
-            'code' => 'required|string|max:8|unique:tickets',
+            'code' => 'required|string|max:15|unique:tickets',
             'category' => 'required|string|max:255|in:incident,support,other',
             'description' => 'required|min:3'
         ]);
@@ -50,7 +50,7 @@ class TicketController extends Controller
         }
 
         $ticket = Ticket::create($request->all());
-        return $this->success($ticket, 'Ticket request has been logged successfully!!', 201);
+        return $this->success(new TicketResource($ticket), 'Ticket request has been logged successfully!!', 201);
     }
 
     public function assign(Request $request, Ticket $ticket): \Illuminate\Http\JsonResponse
@@ -75,7 +75,7 @@ class TicketController extends Controller
             $taskable?->tasks()->save($task);
         }
 
-        return $this->success($ticket, 'This ticket has been assign successfully!');
+        return $this->success(new TicketResource($ticket), 'This ticket has been assign successfully!');
     }
 
     private function getTaskable($type, $taskable)
@@ -91,7 +91,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket): \Illuminate\Http\JsonResponse
     {
-        return $this->success($ticket);
+        return $this->success(new TicketResource($ticket));
     }
 
     /**
@@ -113,7 +113,7 @@ class TicketController extends Controller
         }
 
         $ticket->update($request->except('user_id', 'code'));
-        return $this->success($ticket, 'Ticket request has been updated successfully!!');
+        return $this->success(new TicketResource($ticket), 'Ticket request has been updated successfully!!');
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Traits\TaskLoad;
 class BookingObserver
 {
     use TaskLoad;
+
     /**
      * Handle the Booking "created" event.
      */

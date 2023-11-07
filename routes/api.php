@@ -57,6 +57,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::apiResource('items', 'ItemController');
     Route::apiResource('itemFeatures', 'ItemFeatureController');
     Route::apiResource('brands', 'BrandController');
+    Route::apiResource('purchaseInvoices', 'PurchaseInvoiceController');
 
     // Store Management Routes
     Route::apiResource('requisitions', 'RequisitionController');

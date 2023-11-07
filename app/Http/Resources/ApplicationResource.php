@@ -25,6 +25,8 @@ class ApplicationResource extends JsonResource
             'modules' => $this->modules,
             'departments' => $this->departments,
             'groups' => $this->groups,
+            'allowedDepartments' => $this->departments->pluck('id')->toArray(),
+            'allowedGroups' => $this->groups->pluck('id')->toArray(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

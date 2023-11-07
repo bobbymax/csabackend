@@ -29,7 +29,7 @@ class StockResource extends JsonResource
             'measure' => $this->measure,
             'items' => $this->items,
             'inStock' => $this->inStock,
-            'restockable' => $this->restockable,
+            'restockable' => $this->restockable == 1,
             'restocks' => $this->restocks,
             'request_no_delivery' => $this->request_no_delivery,
             'tagIds' => $this->tags->pluck('id')->toArray(),

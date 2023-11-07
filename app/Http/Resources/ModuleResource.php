@@ -22,6 +22,8 @@ class ModuleResource extends JsonResource
                 'departments' => $this->departments,
                 'groups' => $this->groups
             ],
+            'allowedDepartments' => $this->departments->pluck('id')->toArray(),
+            'allowedGroups' => $this->groups->pluck('id')->toArray(),
             'code' => $this->code,
             'path' => $this->path,
             'icon' => $this->icon,

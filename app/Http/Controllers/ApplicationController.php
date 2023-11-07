@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\FilterObjects;
 use App\Http\Resources\ApplicationResource;
 use App\Models\Application;
 use App\Models\Department;
 use App\Models\Group;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ApplicationController extends Controller
@@ -24,7 +26,8 @@ class ApplicationController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        return $this->success(ApplicationResource::collection(Application::latest()->get()));
+        $applications = Application::latest()->get();
+        return $this->success(ApplicationResource::collection(FilterObjects::allowedApplications(Auth::user(), $applications)));
     }
 
     /**

@@ -35,6 +35,16 @@ class UserResource extends JsonResource
             'company' => $this->company->name,
             'status' => $this->status->name,
             'groups' => $this->groups,
+            'statistics' => [
+                'requisitions' => $this->requisitions,
+                'flights' => $this->reservations->where('type', 'flight')->toArray(),
+                'hotels' => $this->reservations->where('type', 'hotel')->toArray(),
+                'furniture' => $this->furnitureRequests,
+                'logistics' => $this->logisticsRequests,
+                'tickets' => $this->tickets,
+                'tasks' => $this->tasks,
+                'meetings' => $this->roomBookingRequests
+            ]
         ];
     }
 }

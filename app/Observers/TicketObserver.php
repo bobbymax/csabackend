@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Events\SupportTicketCreated;
+use App\Models\Department;
 use App\Models\Ticket;
 use App\Traits\TaskLoad;
 
@@ -14,10 +15,13 @@ class TicketObserver
      */
     public function created(Ticket $ticket): void
     {
-        $dept = $ticket->category === "incident" ? "FLD" : "ICT";
-        $this->loadTask($ticket, "Handle request with code " . $ticket->code, $ticket->category, "staff", $dept);
+        $dept = Department::find($ticket->owner_id);
 
-        SupportTicketCreated::dispatch($ticket, $ticket->staff);
+        if ($dept) {
+            $this->loadTask($ticket, "Handle request with code " . $ticket->code, $ticket->category, "staff", $dept->code);
+            SupportTicketCreated::dispatch($ticket, $ticket->staff);
+        }
+
     }
 
     /**

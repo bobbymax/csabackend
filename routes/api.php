@@ -25,6 +25,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     // Helpdesk custom routes
     Route::patch('assign/tickets/{ticket}', 'TicketController@assign');
     Route::post('imports', 'OperationController@import');
+    Route::get('complaints', 'TicketController@complaints');
+    Route::post('manage/complaints', 'TicketController@manage');
+    Route::patch('resolve/tickets/{ticket}', 'TicketController@resolveTicket');
 
     Route::post('staff/assign/tasks/{task}', 'TaskController@assign');
 
@@ -47,6 +50,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::apiResource('modules', 'ModuleController');
     Route::apiResource('permissions', 'PermissionController');
     Route::apiResource('floors', 'FloorController');
+    Route::apiResource('helpdeskTypes', 'HelpdeskTypeController');
 
     // Inventory Routes
     Route::apiResource('inventoryCategories', 'InventoryCategoryController');
@@ -84,6 +88,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::apiResource('incidentCategories', 'IncidentCategoryController');
     Route::apiResource('issues', 'IssueController');
     Route::apiResource('tickets', 'TicketController');
+    Route::apiResource('todos', 'TodoController');
 
     // Facility Management Routes
     Route::apiResource('furnitureRequests', 'FurnitureRequestController');

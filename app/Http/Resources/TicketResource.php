@@ -18,6 +18,7 @@ class TicketResource extends JsonResource
             'id' => $this->id,
             'code' => $this->code,
             'user_id' => $this->user_id,
+            'support_id' => $this->support_id,
             'attributes' => [
                 'staff' => [
                     'name' => $this->staff->firstname . " " . $this->staff->surname,
@@ -37,13 +38,17 @@ class TicketResource extends JsonResource
                 'uploads' => $this->uploads
             ],
             'department_id' => $this->department_id,
+            'owner_id' => $this->owner_id,
             'issue_id' => $this->issue_id,
             'location_id' => $this->location_id,
             'floor_id' => $this->floor_id,
             'office_number' => $this->office_number,
+            'landmark' => $this->landmark,
             'description' => $this->description,
             'category' => $this->category,
+            'priority' => $this->priority,
             'status' => $this->status,
+            'escalated' => (int) $this->escalated,
             'closed' => $this->closed == 1,
             'created_at' => $this->created_at->format('d F, Y'),
             'updated_at' => $this->updated_at->format('d F, Y'),

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\IncidentResource;
 use App\Models\IncidentCategory;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class IncidentCategoryController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        return $this->success(IncidentCategory::latest()->get());
+        return $this->success(IncidentResource::collection(IncidentCategory::latest()->get()));
     }
 
     /**
@@ -40,7 +41,7 @@ class IncidentCategoryController extends Controller
         }
 
         $incidentCategory = IncidentCategory::create([...$request->all(), 'label' => Str::slug($request->name)]);
-        return $this->success($incidentCategory, 'Category created successfully!!', 201);
+        return $this->success(new IncidentResource($incidentCategory), 'Category created successfully!!', 201);
     }
 
     /**
@@ -48,7 +49,7 @@ class IncidentCategoryController extends Controller
      */
     public function show(IncidentCategory $incidentCategory): \Illuminate\Http\JsonResponse
     {
-        return $this->success($incidentCategory);
+        return $this->success(new IncidentResource($incidentCategory));
     }
 
     /**
@@ -66,7 +67,7 @@ class IncidentCategoryController extends Controller
         }
 
         $incidentCategory->update([...$request->all(), 'label' => Str::slug($request->name)]);
-        return $this->success($incidentCategory, 'Category updated successfully!!');
+        return $this->success(new IncidentResource($incidentCategory), 'Category updated successfully!!');
     }
 
     /**

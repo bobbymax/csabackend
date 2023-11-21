@@ -54,6 +54,26 @@ class User extends Authenticatable
         return $this->belongsTo(GradeLevel::class, 'grade_level_id');
     }
 
+    public function requisitions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Requisition::class);
+    }
+
+    public function reservations(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function furnitureRequests(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(FurnitureRequest::class);
+    }
+
+    public function logisticsRequests(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(LogisticsRequest::class);
+    }
+
     public function department(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Department::class, 'department_id');

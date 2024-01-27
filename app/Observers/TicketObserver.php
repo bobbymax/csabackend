@@ -21,7 +21,6 @@ class TicketObserver
             $this->loadTask($ticket, "Handle request with code " . $ticket->code, $ticket->category, "staff", $dept->code);
             SupportTicketCreated::dispatch($ticket, $ticket->staff);
         }
-
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ItemResource;
 use App\Models\Item;
 use App\Models\ItemFeature;
+use App\Models\Stock;
 use App\Traits\HttpResponses;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,6 +26,11 @@ class ItemController extends Controller
     public function index(): \Illuminate\Http\JsonResponse
     {
         return $this->success(ItemResource::collection(Item::latest()->get()));
+    }
+
+    public function stockItems(Stock $stock): \Illuminate\Http\JsonResponse
+    {
+        return $this->success(ItemResource::collection($stock->items));
     }
 
     /**

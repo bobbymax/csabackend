@@ -2,19 +2,23 @@
 
 namespace App\Providers;
 
+use App\Events\FurnitureRequestResolved;
 use App\Events\RequisitionApproved;
 use App\Events\RequisitionConfirmed;
 use App\Events\SupportTicketCreated;
 use App\Events\TaskAssigned;
+use App\Listeners\SendFurnitureRequestResolutionMail;
 use App\Listeners\SendRequisitionApprovedMail;
 use App\Listeners\SendRequisitionConfirmationMail;
 use App\Listeners\SendSupportTicketCreatedMail;
 use App\Listeners\SendTaskAssignedConfirmationEmail;
 use App\Models\Booking;
+use App\Models\FurnitureRequest;
 use App\Models\LogisticsRequest;
 use App\Models\Requisition;
 use App\Models\Ticket;
 use App\Observers\BookingObserver;
+use App\Observers\FurnitureRequestObserver;
 use App\Observers\LogisticsRequestObserver;
 use App\Observers\RequisitionObserver;
 use App\Observers\TicketObserver;
@@ -49,6 +53,10 @@ class EventServiceProvider extends ServiceProvider
 
         SupportTicketCreated::class => [
             SendSupportTicketCreatedMail::class
+        ],
+
+        FurnitureRequestResolved::class => [
+            SendFurnitureRequestResolutionMail::class
         ]
     ];
 
@@ -61,6 +69,7 @@ class EventServiceProvider extends ServiceProvider
         LogisticsRequest::observe(LogisticsRequestObserver::class);
         Booking::observe(BookingObserver::class);
         Ticket::observe(TicketObserver::class);
+        FurnitureRequest::observe(FurnitureRequestObserver::class);
     }
 
     /**

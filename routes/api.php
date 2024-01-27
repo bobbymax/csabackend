@@ -21,6 +21,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::get('fetch/tasks', 'TaskController@getTasks');
     Route::get('pending/reservations', 'LogisticsRequestController@getPendingReservations');
     Route::get('fetch/pending/schedules', 'BookingController@getPendingBookingRequests');
+    Route::get('manage/furniture/requests', 'FurnitureRequestController@getFurnitureRequests');
 
     // Helpdesk custom routes
     Route::patch('assign/tickets/{ticket}', 'TicketController@assign');
@@ -35,6 +36,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::get('logout', 'AuthController@logout');
     Route::get('refresh', 'AuthController@refresh');
     Route::patch('status/logisticsRequests/{logisticsRequest}', 'LogisticsRequestController@updateLogisticsRequestStatus');
+    Route::get('stocks/items/{stock}', 'ItemController@stockItems');
+    Route::patch('close/furnitureRequests/{furnitureRequest}', 'FurnitureRequestController@completeRequest');
 
     Route::apiResource('remarks', 'RemarkController');
     Route::apiResource('companies', 'CompanyController');

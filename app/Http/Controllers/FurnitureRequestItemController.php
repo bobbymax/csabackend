@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FurnitureRequestItemResource;
 use App\Models\FurnitureRequestItem;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class FurnitureRequestItemController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        return $this->success(FurnitureRequestItem::latest()->get());
+        return $this->success(FurnitureRequestItemResource::collection(FurnitureRequestItem::latest()->get()));
     }
 
     /**
@@ -40,7 +41,7 @@ class FurnitureRequestItemController extends Controller
         }
 
         $furnitureRequestItem = FurnitureRequestItem::create($request->all());
-        return $this->success($furnitureRequestItem, 'Furniture Request Item has been added successfully!!', 201);
+        return $this->success(new FurnitureRequestItemResource($furnitureRequestItem), 'Furniture Request Item has been added successfully!!', 201);
     }
 
     /**
@@ -48,7 +49,7 @@ class FurnitureRequestItemController extends Controller
      */
     public function show(FurnitureRequestItem $furnitureRequestItem): \Illuminate\Http\JsonResponse
     {
-        return $this->success($furnitureRequestItem);
+        return $this->success(new FurnitureRequestItemResource($furnitureRequestItem));
     }
 
     /**
@@ -57,9 +58,8 @@ class FurnitureRequestItemController extends Controller
     public function update(Request $request, FurnitureRequestItem $furnitureRequestItem): \Illuminate\Http\JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'furniture_request_id' => 'required|integer',
-            'item_id' => 'required|integer',
-            'quantity' => 'required|integer',
+            'quantity_issued' => 'required|integer',
+            'status' => 'required|string|max:255|in:resolved,canceled'
         ]);
 
         if ($validator->fails()) {
@@ -67,7 +67,7 @@ class FurnitureRequestItemController extends Controller
         }
 
         $furnitureRequestItem->update($request->all());
-        return $this->success($furnitureRequestItem, 'Furniture Request Item has been updated successfully!!');
+        return $this->success(new FurnitureRequestItemResource($furnitureRequestItem), 'Furniture Request Item has been updated successfully!!');
     }
 
     /**

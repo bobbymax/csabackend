@@ -25,6 +25,7 @@ class TaskResource extends JsonResource
             'status' => $this->status,
             'owner' => $this->taskable,
             'assignees' => $this->staff->pluck('id')->toArray(),
+            'staff' => $this->staff->pluck('firstname')->toArray(),
             'todos' => $this->todos,
             'raised_at' => Carbon::parse($this->created_at)->diffForHumans(),
             'created_at' => $this->created_at,
